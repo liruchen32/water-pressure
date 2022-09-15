@@ -1,0 +1,63 @@
+version: "3.7"
+
+services:
+  db:
+    container_name: pressure_mysql
+    image: mysql:5.7
+    restart: always
+    platform: linux/amd64
+    networks: 
+     - app-network
+    volumes: 
+     - app_db_volume:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: 'water_pressure'
+      MYSQL_USERNAME: 'root'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    command:
+      [
+        'mysqld',
+        '--default-authentication-plugin=mysql_native_password',
+        '--character-set-server=utf8mb4',
+        '--collation-server=utf8mb4_unicode_520_ci'
+      ]
+
+  server:
+    build: 
+      context: ./pressure-server
+      dockerfile: Dockerfile
+    ports: 
+     - "3000:3000"
+    tty: true
+    volumes:
+     - ./pressure-server:/app
+    networks: 
+     - app-network
+    # environment:
+    #  - NODE_ENV=development
+    # command: npm run dev
+    
+  client:
+    build:
+      context: ./pressure-web
+      dockerfile: Dockerfile
+    ports: 
+     - "8080:8080"
+    volumes: 
+     - ./pressure-web:/app
+    # environment:
+    #  - NODE_ENV=development
+    depends_on: 
+     - server
+    # command: npm run serve
+
+volumes: 
+  app_db_volume:
+
+networks: 
+  app-network:
