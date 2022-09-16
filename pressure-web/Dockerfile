@@ -1,9 +1,9 @@
 FROM node:16.13.2-alpine
 
-WORKDIR /app
+WORKDIR /
 
-COPY package*.json ./
-
+COPY package*.json /
+RUN npm install -g @vue/cli@latest
 RUN npm install
 
 COPY . .
