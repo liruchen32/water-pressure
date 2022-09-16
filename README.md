@@ -1,5 +1,11 @@
 # water-pressure
 
+
+## Project setup
+```
+docker compose -f ./docker-compose.yml up
+```
+
 ## 介紹
 
 >這是一個可以從前端上傳 excel 儲存至資料庫後，將數據透過圖表的方式呈現的簡易專案
@@ -31,8 +37,9 @@ excel 所需要的欄位
 
 容器: Docker
 
+## 未來功能
 
-## Project setup
-```
-docker compose -f ./docker-compose.yml up
-```
+- [ ] 實驗刪除功能  
+- [ ] 表格分頁和單頁數量功能  
+- [ ] 搜尋實驗功能  
+
